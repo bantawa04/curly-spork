@@ -1,30 +1,9 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
 
-const schema = yup.object().shape({
-  title: yup.string().required(),
-  description: yup.string().min(8).max(32).required(),
-  price: yup.number().min(1).max(100).required(),
-  brand: yup.string().required(),
-})
-
-const Form1: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  })
-  const onSubmit = (data: any) => {
-    console.log(data)
-  }
-  console.log(errors)
+const Form2: React.FC = () => {
   return (
-    <div className="reactHookForm-Wrapper" onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="text-2xl font-bold mb-4">React Hook Form</h1>
+    <div className="formikForm-Wrapper">
+      <h1 className="text-2xl font-bold mx-4">Product Form</h1>
       <form>
         <div className="mb-4">
           <label
@@ -36,12 +15,10 @@ const Form1: React.FC = () => {
           <input
             type="text"
             id="title"
+            name="title"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
-            {...register('title')}
+            required
           />
-          {errors.title ? (
-            <span className="text-red-500 text-sm">{errors.title.message}</span>
-          ) : null}
         </div>
         <div className="mb-4">
           <label
@@ -52,14 +29,10 @@ const Form1: React.FC = () => {
           </label>
           <textarea
             id="description"
+            name="description"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
-            {...register('description')}
+            required
           ></textarea>
-          {errors.description ? (
-            <span className="text-red-500 text-sm">
-              {errors.description.message}
-            </span>
-          ) : null}
         </div>
         <div className="mb-4">
           <label
@@ -71,12 +44,10 @@ const Form1: React.FC = () => {
           <input
             type="number"
             id="price"
+            name="price"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
-            {...register('price')}
+            required
           />
-          {errors.price ? (
-            <span className="text-red-500 text-sm">{errors.price.message}</span>
-          ) : null}
         </div>
         <div className="mb-4">
           <label
@@ -87,21 +58,19 @@ const Form1: React.FC = () => {
           </label>
           <select
             id="brand"
+            name="brand"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
-            {...register('brand')}
+            required
           >
             <option value="">Select a brand</option>
             <option value="brand1">Brand 1</option>
             <option value="brand2">Brand 2</option>
             <option value="brand3">Brand 3</option>
           </select>
-          {errors.brand ? (
-            <span className="text-red-500 text-sm">{errors.brand.message}</span>
-          ) : null}
         </div>
         <button
           type="submit"
-          className="bg-black text-white py-2 mb-2 px-4 rounded hover:bg-gray-900 focus:outline-none focus:bg-gray-900"
+          className="bg-black text-white py-2 px-4 rounded hover:bg-gray-900 focus:outline-none focus:bg-gray-900"
         >
           Submit
         </button>
@@ -109,4 +78,4 @@ const Form1: React.FC = () => {
     </div>
   )
 }
-export default Form1
+export default Form2
