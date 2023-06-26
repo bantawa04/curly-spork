@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import Form1 from './component/ReactHookForm'
+import Form from './component/ReactHookForm'
 import { Product } from './utils'
 function App() {
   const [enabled, setEnabled] = useState(false)
@@ -47,7 +47,7 @@ function App() {
       </div>
       <div className="container mx-auto p-4">
         <div className="columns gap-10">
-          <Form1 productData={product} edit={enabled} />
+          <Form productData={product} edit={enabled} />
         </div>
       </div>
     </>

@@ -15,14 +15,13 @@ const schema = yup.object().shape({
   price: yup.number().min(1).max(1000).required(),
   brand: yup.string().required(),
 })
-const Form1: React.FC<IFormProps> = ({ productData, edit }) => {
+const Form: React.FC<IFormProps> = ({ productData, edit }) => {
   const initialValues = {
     title: '',
     description: '',
     price: 0,
     brand: '',
   }
-  console.log(initialValues)
   const {
     register,
     handleSubmit,
