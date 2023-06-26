@@ -137,4 +137,4 @@ const Form: React.FC<IFormProps> = ({ productData, edit }) => {
     </div>
   )
 }
-export default Form1
+export default Form
