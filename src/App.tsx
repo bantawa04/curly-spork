@@ -1,7 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Form1 from './component/ReactHookForm'
+import { Product } from './utils'
 function App() {
   const [enabled, setEnabled] = useState(false)
+  const [product, setProduct] = useState<Product>({})
+
+  useEffect(() => {
+    if (enabled) {
+      async function fetchData() {
+        try {
+          const response = await fetch('https://dummyjson.com/products/1')
+          const { title, description, price, brand } = await response.json()
+          setProduct({ title, description, price, brand })
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+      fetchData()
+    }
+  }, [enabled])
   return (
     <>
       <div className="container mx-auto p-4">
@@ -29,7 +47,7 @@ function App() {
       </div>
       <div className="container mx-auto p-4">
         <div className="columns gap-10">
-          <Form1 />
+          <Form1 productData={product} edit={enabled} />
         </div>
       </div>
     </>

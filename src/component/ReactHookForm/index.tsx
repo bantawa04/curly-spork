@@ -1,27 +1,55 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
+import React, { useEffect } from 'react'
+import { Resolver, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { Product } from '../../utils'
+
+interface IFormProps {
+  productData?: Product
+  edit: boolean
+}
 
 const schema = yup.object().shape({
   title: yup.string().required(),
-  description: yup.string().min(8).max(32).required(),
-  price: yup.number().min(1).max(100).required(),
+  description: yup.string().min(8).required(),
+  price: yup.number().min(1).max(1000).required(),
   brand: yup.string().required(),
 })
-
-const Form1: React.FC = () => {
+const Form1: React.FC<IFormProps> = ({ productData, edit }) => {
+  const initialValues = {
+    title: '',
+    description: '',
+    price: 0,
+    brand: '',
+  }
+  console.log(initialValues)
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    defaultValues: productData ?? initialValues,
+    resolver: yupResolver(schema) as Resolver<Partial<Product>, any>,
   })
+
+  useEffect(() => {
+    if (!edit) {
+      reset(initialValues)
+    }
+  }, [edit, reset, initialValues])
+
   const onSubmit = (data: any) => {
-    console.log(data)
+    alert('Submitted data' + JSON.stringify(data))
   }
-  console.log(errors)
+
+  useEffect(() => {
+    setValue('title', productData?.title || '')
+    setValue('description', productData?.description || '')
+    setValue('price', productData?.price || 0)
+    setValue('brand', productData?.brand || '')
+  }, [productData, setValue])
   return (
     <div className="reactHookForm-Wrapper" onSubmit={handleSubmit(onSubmit)}>
       <h1 className="text-2xl font-bold mb-4">React Hook Form</h1>
@@ -89,11 +117,12 @@ const Form1: React.FC = () => {
             id="brand"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-black"
             {...register('brand')}
+            value={productData?.brand || ''}
           >
             <option value="">Select a brand</option>
-            <option value="brand1">Brand 1</option>
-            <option value="brand2">Brand 2</option>
-            <option value="brand3">Brand 3</option>
+            <option value="Apple">Apple</option>
+            <option value="Samsung">Samsung</option>
+            <option value="Oppo">Oppo</option>
           </select>
           {errors.brand ? (
             <span className="text-red-500 text-sm">{errors.brand.message}</span>
