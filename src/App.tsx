@@ -1,39 +1,29 @@
 import { useState } from 'react'
 import Form1 from './component/ReactHookForm'
 function App() {
-  const [isChecked, setIsChecked] = useState(false)
-
-  const handleToggle = () => {
-    console.log(isChecked)
-    setIsChecked(!isChecked)
-  }
+  const [enabled, setEnabled] = useState(false)
   return (
     <>
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Switch Button</h1>
-        <div className="flex items-center">
-          <label htmlFor="toggle" className="text-black mr-2">
-            Toggle Switch
-          </label>
-          <div
-            className={`relative inline-block w-10 h-6 align-middle select-none ${
-              isChecked ? 'bg-black' : 'bg-gray-300'
-            } rounded-full`}
-          >
-            <input
-              type="checkbox"
-              name="toggle"
-              id="toggle"
-              className="toggle-checkbox absolute w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
-              checked={isChecked}
-              onChange={handleToggle}
-            />
-            <label
-              htmlFor="toggle"
-              className={`toggle-label absolute left-0 bg-white w-4 h-4 rounded-full transition transform ${
-                isChecked ? 'translate-x-full bg-gray-300' : 'translate-x-0'
-              }`}
-            ></label>
+        <div className="relative flex flex-col items-center">
+          <div className="flex">
+            <label className="inline-flex relative items-center mr-5 cursor-pointer">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={enabled}
+                readOnly
+              />
+              <div
+                onClick={() => {
+                  setEnabled(!enabled)
+                }}
+                className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"
+              ></div>
+              <span className="ml-2 text-sm font-medium text-gray-900">
+                Edit mode
+              </span>
+            </label>
           </div>
         </div>
       </div>
